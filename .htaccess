@@ -1,0 +1,12 @@
+#Activa la reescritura de URL
+RewriteEngine On
+
+#Desactiva la opcion para navegar en los directorios en el servidor
+Options -Indexes
+
+#Se aplica la reescritura su la URL no es un directorio existente en el servidor
+RewriteCond %{REQUEST_FILENAME} !-d
+#Solo se reescribe la solicitud si el arhivo existe
+RewriteCond %{REQUEST_FILENAME} !-f
+#Refirecciona las solucitudes a index.php
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]

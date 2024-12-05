@@ -1,0 +1,127 @@
+CREATE DATABASE consultorio;
+USE consultorio;
+
+-- Tabla de Médicos
+CREATE TABLE medicos (
+    id_medico INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255),
+    apellidos VARCHAR(255),
+    correo VARCHAR(255) UNIQUE,
+    password VARCHAR(255),
+    cedula VARCHAR(255)
+);
+
+-- Inserciones en Médicos
+INSERT INTO medicos (nombre, apellidos, correo, password, cedula) VALUES
+('Jesus', 'Plata Avila', 'jesusplata79@gmail.com', '$2y$10$QF0ZyEV1BRg4XI2j9DrN/eaKqytBhkxt4Ci2nq/1xARLuatagjC6K', '5234567'),
+('Lorena', 'Isabel', 'loreisagomez85@gmail.com.', '$2y$10$QF0ZyEV1BRg4XI2j9DrN/eaKqytBhkxt4Ci2nq/1xARLuatagjC6K', ''),
+('Leticia', '', 'leticianegreteramirez@gmail.com.', '$2y$10$QF0ZyEV1BRg4XI2j9DrN/eaKqytBhkxt4Ci2nq/1xARLuatagjC6K', ''),
+('Erika Nayeli', 'Vazquez Hernández', 'dra.erika.vazquez8124@gmail.com.', '$2y$10$QF0ZyEV1BRg4XI2j9DrN/eaKqytBhkxt4Ci2nq/1xARLuatagjC6K', ''),
+('Lizeth', 'García López', 'dralizgarcial@yahoo.com.mx.', '$2y$10$QF0ZyEV1BRg4XI2j9DrN/eaKqytBhkxt4Ci2nq/1xARLuatagjC6K', ''),
+('Belgica', '', 'belgicarobledo5@gmail.com.', '$2y$10$QF0ZyEV1BRg4XI2j9DrN/eaKqytBhkxt4Ci2nq/1xARLuatagjC6K', '');
+
+-- Tabla de Pacientes
+CREATE TABLE pacientes (
+    id_paciente INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255),
+    apellidos VARCHAR(255),
+    no_telefono VARCHAR(255),
+    correo VARCHAR(255) UNIQUE,
+    password VARCHAR(255),
+    fecha_nacimiento DATE
+);
+
+-- Inserciones en Pacientes
+INSERT INTO pacientes (nombre, apellidos, no_telefono, correo, password, fecha_nacimiento) VALUES 
+('Jesus', 'Plata Avila', '5614598219', 'ardilla_conker1@hotmail.com', '$2y$10$QF0ZyEV1BRg4XI2j9DrN/eaKqytBhkxt4Ci2nq/1xARLuatagjC6K', '1999-01-25');
+
+-- Tabla de Consultorios
+CREATE TABLE consultorios (
+    id_consultorio INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255),
+    direccion VARCHAR(255),
+    coordenadas POINT NOT NULL,
+    abre_h TIME,
+    cierra_h TIME,
+    dias VARCHAR(255),
+    telefono VARCHAR(255),
+    correo VARCHAR(255),
+    especialidad VARCHAR(100),
+    informacion VARCHAR(255),
+    SPATIAL INDEX(coordenadas)
+);
+
+-- Inserciones en Consultorios
+INSERT INTO consultorios (nombre, direccion, coordenadas, abre_h, cierra_h, dias, telefono, correo, especialidad, informacion) VALUES
+('Consultorio-Prueba', 'C. 10 15, San Juan Tlalpizahuac, 56618 Valle de Chalco Solidaridad, Méx.', POINT(19.32490110633112, -98.9533701470529), '00:00', '24:00', '{"Domingo": false, "Lunes": true, "Martes": true, "Miercoles": true, "Jueves": true, "Viernes": true, "Sabado": true}', '5614598219', 'ardilla_conker1@hotmail.com', 'Médico General', ''),
+('Juquilita', 'Tamaulipas 18, San Juan Tlalpizahuac, 56618 De, Méx.', POINT(19.323106872751506, -98.95279538836567), '11:00', '15:00', '{"Domingo": false, "Lunes": true, "Martes": true, "Miercoles": true, "Jueves": true, "Viernes": true, "Sabado": true}', '5567360544', 'loreisagomez85@gmail.com', 'Médico General', ''),
+('Consultorio Médico y Farmacia de Genéricos', 'Av Agricultura 4, Santa Cruz Tlalpizahuac, 56577 Ixtapaluca, Méx.', POINT(19.327642097174948, -98.94782773823417), '12:00', '19:00', '{"Domingo": false, "Lunes": true, "Martes": true, "Miercoles": true, "Jueves": true, "Viernes": true, "Sabado": true}', '525584418501', 'leticianegreteramirez@gmail.com', 'Médico General', ''),
+('Consultorio sin nombre', 'C. 6 10-5, San Juan Tlalpizahuac, 56618 Valle de Chalco Solidaridad, Méx.', POINT(19.326739389501515, -98.95346763608748), '15:00', '19:00', '{"Domingo": false, "Lunes": true, "Martes": true, "Miercoles": true, "Jueves": true, "Viernes": true, "Sabado": false}', '5529711612', 'dra.erika.vazquez8124@gmail.com', 'Médico General', ''),
+('Nuevo día', 'Durango 62, San Juan Tlalpizahuac, 56618 Valle de Chalco Solidaridad, Méx.', POINT(19.32299844379444, -98.95358565325698), '17:00', '18:30', '{"Domingo": false, "Lunes": false, "Martes": true, "Miercoles": false, "Jueves": true, "Viernes": false, "Sabado": false}', '5539945051', 'dralizgarcial@yahoo.com.mx', 'Médico General', ''),
+('Polimérica Quirúrgica 24 horas', 'Av Agricultura 7-B, San Juan Tlalpizahuac, 56618 Valle de Chalco Solidaridad, Méx.', POINT(19.324587343773754, -98.95088466866699), '00:00', '24:00', '{"Domingo": true, "Lunes": true, "Martes": true, "Miercoles": true, "Jueves": true, "Viernes": true, "Sabado": true}', '5513143656', '', 'Médico General, Ginecología, Pediatría, Otorrinolaringología', '');
+
+
+-- Tabla Transitiva de Consultorios
+CREATE TABLE transitiva_consultorios (
+    id_medico_consultorio INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    id_medico INTEGER NOT NULL,
+    id_consultorio INTEGER NOT NULL,
+    FOREIGN KEY(id_medico) REFERENCES medicos(id_medico) ON DELETE CASCADE,
+    FOREIGN KEY(id_consultorio) REFERENCES consultorios(id_consultorio) ON DELETE CASCADE,
+    UNIQUE(id_medico, id_consultorio)
+);
+
+-- Consultorios de medico
+INSERT INTO transitiva_consultorios (id_medico, id_consultorio) VALUES
+(1,1),
+(2,2),
+(3,3),
+(4,4),
+(5,5),
+(6,6);
+
+-- Tabla de Citas
+CREATE TABLE citas (
+    id_cita INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_paciente INTEGER NOT NULL,
+    id_consultorio INTEGER NOT NULL,
+    permiso_historial ENUM('si','no'),
+    horario TIME,
+    fecha DATE,
+    datos_adicionales VARCHAR(255),
+    estado ENUM('espera', 'terminada', 'cancelada'),
+    tipo_cita ENUM('general', 'seguimiento', 'urgencia', 'especialidad'),
+    FOREIGN KEY(id_paciente) REFERENCES pacientes(id_paciente) ON DELETE CASCADE,
+    FOREIGN KEY(id_consultorio) REFERENCES consultorios(id_consultorio) ON DELETE CASCADE
+);
+
+-- Tabla de Recetas
+CREATE TABLE recetas (
+    id_receta INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    id_medico INTEGER NOT NULL,
+    id_consultorio INTEGER NOT NULL,
+    id_paciente INTEGER NOT NULL,
+    edad INTEGER,
+    estatura INTEGER,
+    peso FLOAT,
+    diagnostico VARCHAR(255),
+    fecha DATE,
+    alergias VARCHAR(255),
+    temperatura VARCHAR(255),
+    tratamiento VARCHAR(255),
+    t_a VARCHAR(255),
+    FOREIGN KEY(id_medico) REFERENCES medicos(id_medico) ON DELETE CASCADE,
+    FOREIGN KEY(id_consultorio) REFERENCES consultorios(id_consultorio) ON DELETE CASCADE,
+    FOREIGN KEY(id_paciente) REFERENCES pacientes(id_paciente) ON DELETE CASCADE
+);
+
+-- Tabla de Historial Clínico
+CREATE TABLE historial_clinico (
+    id_historial INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    id_paciente INTEGER NOT NULL,
+    titulo VARCHAR(255),
+    documento VARCHAR(255),
+    imagen LONGTEXT,
+    descripcion VARCHAR(255),
+    FOREIGN KEY(id_paciente) REFERENCES pacientes(id_paciente) ON DELETE CASCADE
+);
